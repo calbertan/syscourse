@@ -34,4 +34,4 @@ Calls to microservices should pass through an API Gateway and have the right Ing
 
 
 ## Note
-This repo is a public release of forked private repo, hence why there is no history
+This repo is a public release of forked private repo where old commits contained sensitive API keys, hence why there is no history
