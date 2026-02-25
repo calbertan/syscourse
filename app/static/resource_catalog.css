@@ -1,0 +1,73 @@
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 200px;
+    margin: 0; /* Remove default margin */
+}
+
+.card {
+    width: calc(25% - 20px); /* Adjust width as needed */
+    margin-bottom: 20px; /* Adjust margin as needed */
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border: 2px solid #A6192E; /* SFU Dark Red */
+    transition: box-shadow 0.3s ease; /* Add transition effect */
+    max-width: 250px; /* Adjust the maximum width as needed */
+    padding: 15px; /* Add padding */
+    background-color: #ffffff; /* SFU Light Red */
+}
+
+.card:hover {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Change box-shadow on hover */
+}
+
+.card-image {
+    overflow: hidden; /* Hide any content that overflows the container */
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.card-image img {
+    width: 100%; /* Make the image fill the container width */
+    height: auto; /* Maintain aspect ratio */
+    display: block; /* Ensure the image behaves as a block element */
+}
+
+.card-content {
+    padding: 15px; /* Adjust padding as needed */
+}
+
+.card-content .title {
+    margin-bottom: 5px; /* Adjust margin bottom as needed */
+}
+
+.card-content .subtitle {
+    margin-bottom: 10px; /* Adjust margin bottom as needed */
+    color: #A6192E; /* SFU Dark Red */
+}
+
+.card-footer {
+    padding: 10px 20px;
+    background-color: #ffffff; /* SFU Light Red */
+    border-top: 1px solid #ffffff;
+    border-radius: 0 0 10px 10px;
+}
+
+.hiddenButton {
+    opacity: 0;
+    border: none;
+}
+
+.card-footer:hover .hiddenButton {
+    animation: buttonFade 0.5s ease-in-out;
+    display: block;
+    margin-left: 24px;
+    margin-top: 24px;
+    background-color: #A6192E; /* SFU Dark Red */
+    color: white;
+    padding: 7px 12px;
+    border-radius: 5px;
+    font-size: 16px;
+    opacity: 1;
+}

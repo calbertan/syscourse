@@ -1,0 +1,17 @@
+{
+  "name": "email_with_sendgrid",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@google-cloud/pubsub": "^4.3.3",
+    "@sendgrid/mail": "^8.1.1",
+    "express": "^4.18.3",
+    "express-validator": "^7.0.1"
+  }
+}

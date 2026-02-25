@@ -1,0 +1,24 @@
+{
+  "functions": [
+    {
+      "source": "course_helper",
+      "codebase": "course_helper",
+      "ignore": [
+        "venv",
+        ".git",
+        "firebase-debug.log",
+        "firebase-debug.*.log"
+      ]
+    },
+    {
+      "source": "resource_helper",
+      "codebase": "resource_helper",
+      "ignore": [
+        "venv",
+        ".git",
+        "firebase-debug.log",
+        "firebase-debug.*.log"
+      ]
+    }
+  ]
+}

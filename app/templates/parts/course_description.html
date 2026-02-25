@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Course Description</title>
+  <link rel="stylesheet" href="/static/description.css">
+</head>
+<body>
+  <div class="container">
+    <article class="media">
+      <figure class="media-left">
+        <p class="image">
+          <img src="https://storage.cloud.google.com/{{bucket}}/{{ course.thumbnailUrl }}.png" onerror="this.src='https://storage.cloud.google.com/{{bucket}}/missing.png'" alt="Course Thumbnail">
+        </p>
+      </figure>
+      <div class="media-content">
+        <div class="content">
+          <p>
+            <strong>Title:</strong> {{ course.title }}
+            <br>
+            <strong>Description:</strong> {{ course.description }}
+            <br>
+            <strong>Instructor:</strong> {{ course.instructor }}
+            <br>
+            <strong>Field:</strong> {{ course.field }}
+            <br>
+            <strong>Level:</strong> {{ course.level }}
+            <br>
+            <strong>Ratings Average:</strong> {{ course.ratingsAverage }}
+            <br>
+          </p>
+        </div>
+      </div>
+    </article>
+  </div>
+</body>
+</html>

@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-api-gateway-egress
+  namespace: default
+spec:
+  podSelector:
+    matchLabels:
+      app: sys-course
+  policyTypes:
+    - Egress
+  egress:
+    # Allow DNS resolution
+    - ports:
+        - protocol: UDP
+          port: 53
+    # Allow egress traffic to API gateway
+    - to:
+        - ipBlock:
+            cidr: 
+      ports:
+        - protocol: TCP
+          port: 443

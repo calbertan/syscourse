@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Sys Course: Course Detail{% endblock %}
+{% block head_extension %}
+  <link rel="stylesheet" href="/static/stripe.css">
+{% endblock %}
+{% block content %}
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container">
+        <h2 class="subtitle">Course Detail</h2>
+      </div>
+      <br>
+      {% include "parts/course_description.html" %}
+    </div>
+  </section>
+  {% include "parts/resource_list.html" %}
+{% endblock %}

@@ -1,0 +1,16 @@
+.vscode
+node_modules
+init.sh
+__pycache__
+package-lock.json
+.gcloudignore
+.pytest_cache
+env
+.pyc
+*.orig
+app_stream_events.yaml
+app.yaml
+firebase_config.json
+functions_env_vars.yaml
+gcsFetcherManifest.json
+initFirebase.js

@@ -1,0 +1,1 @@
+from .blueprint import all_resource_page

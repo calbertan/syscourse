@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+{% block title %}Sys Course: Upload Resources{% endblock %}
+{% block head_extension %}
+  <link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet">
+  <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css" rel="stylesheet">
+  <link href="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.css" rel="stylesheet">
+  <link rel="stylesheet" href="/static/upload_resource.css">
+{% endblock %}
+{% block content %}
+  <section class="hero is-medium">
+    <div class="hero-body">
+      <div class="container has-text-centered">
+        <h1 class="title">Upload Your Course Resources</h1>
+        <h2 class="subtitle">
+          You can upload images or PDF documents.
+        </h2>
+      </div>
+    </div>
+  </section>
+  <div class="container">
+    <form id="resource-upload-form" action="/upload_resource" method="POST" enctype="multipart/form-data">
+      {{ form.csrf_token }}
+      <div class="field">
+        <label class="label">Course</label>
+        <div class="control has-icons-left">
+          <div class="select is-fullwidth">
+            <span class="icon is-small is-left">
+              <i class="fas fa-book"></i>
+            </span>
+            <select name="course_id">
+              {% for choice in form.course_id.choices %}
+                <option value="{{ choice[0] }}">{{ choice[1] }}</option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="field">
+        <label class="label">Title</label>
+        <div class="control">
+          <input class="input" type="text" name="title" placeholder="Resource title" required>
+        </div>
+      </div>
+      <div class="field">
+        <label class="label">Description</label>
+        <div class="control">
+          <textarea class="textarea" name="description" placeholder="Resource description" required></textarea>
+        </div>
+      </div>
+      <div class="field">
+        <div class="control">
+          <!-- FilePond input for file upload -->
+          <input type="file" class="filepond" name="resourceFile" accept="image/png, application/pdf">
+        </div>
+      </div>
+      <div class="field">
+        <div class="control">
+          <button class="button is-link" type="submit">Submit</button>
+        </div>
+      </div>
+    </form>
+  </div>
+{% endblock%}
+{% block script%}
+<script>
+  // Get the CSRF token from the hidden input field
+const csrfToken = document.querySelector('input[name="csrf_token"]').value;
+
+// Initialize FilePond
+FilePond.registerPlugin(
+  FilePondPluginImagePreview,
+  FilePondPluginFileValidateType
+);
+
+// Create the FilePond instance
+const pond = FilePond.create(document.querySelector('.filepond'), {
+  acceptedFileTypes: ['image/png', 'application/pdf'],
+  server: {
+    process: {
+      url: '/upload_resource',
+      method: 'POST',
+      headers: {
+        'X-CSRFToken': csrfToken
+      },
+      ondata: (formData) => {
+        // Append additional form data
+        formData.append('title', document.querySelector('input[name="title"]').value);
+        formData.append('description', document.querySelector('textarea[name="description"]').value);
+        formData.append('course_id', document.querySelector('select[name="course_id"]').value);
+        return formData;
+      }
+    }
+  }
+});
+</script>
+{% endblock %}

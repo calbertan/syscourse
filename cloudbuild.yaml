@@ -1,0 +1,45 @@
+# Copyright 2018 Google LLC.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# See [Set up Serverless Store: Part 3](https://medium.com/@ratrosy/set-up-serverless-store-part-3-computing-cron-jobs-and-management-tools-34d51475df70)
+# for more information about this specification.
+
+steps:
+# Cloud Build Step #1: Clone source code from GitHub
+- name: 'gcr.io/cloud-builders/git'
+  args: ['clone', 'https://github.com/GoogleCloudPlatform/cloud-builders']
+
+# Cloud Build Step #2: Replace placeholder configurations in the project with
+#                      Project specific ones from Google Cloud Storage.
+- name: 'gcr.io/cloud-builders/gcs-fetcher'
+  args:
+  - '--type=Manifest'
+  - '--location=gs://syscourse-474-build/cloudbuild/gcsFetcherManifest.json'
+
+# Cloud Build Step #3: Deploy the App Engine app.
+- name: 'gcr.io/cloud-builders/gcloud'
+  args: ['app', 'deploy', 'app/app.yaml']
+
+# Cloud Build Step #4: Deploy the App Engine service for streaming events to
+# Google BigQuery.
+- name: 'gcr.io/cloud-builders/gcloud'
+  args: ['app', 'deploy', 'extras/streamEventsApp/app.yaml']
+
+  # Cloud Build Step #5: Deploy the API gateway
+- name: 'gcr.io/cloud-builders/gcloud'
+  args: ['functions', 'deploy', 'sendEmail', '--source=./functions/email_with_sendgrid/', '--runtime=nodejs20', '--trigger-topic=notification']
+  
+# Cloud Build Step #6: Deploy the Cloud Function for image/pdf upload
+- name: 'gcr.io/cloud-builders/gcloud'
+  args: ['functions', 'deploy', 'upload_image', '--source=./functions/upload_image/', '--runtime=python39', '--trigger-http', '--allow-unauthenticated']

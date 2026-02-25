@@ -1,0 +1,56 @@
+/* TODO: Make sure that the width set in grid-template-columns is the same as card-course-catalog-image */
+.title {
+    color: #0e4d88;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+.card-course-catalog-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 200px);
+    gap: 32px; /* Gap between grid items */
+}
+
+.card-course-catalog {
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    transition: box-shadow 0.3s ease; /* Add transition effect */
+}
+
+.card-course-catalog:hover {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Change box-shadow on hover */
+}
+
+
+.card-course-catalog-image {
+    overflow: hidden; /* Hide any content that overflows the container */
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+.card-course-catalog-image img {
+    width: 100%; /* Fill the width of the container */
+    height: auto; /* Maintain aspect ratio */
+    display: block; /* Ensure the image behaves as a block element */
+}
+.card-course-catalog-title {
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.card-course-catalog-content {
+    font-size: 12px;
+}
+
+.card-course-catalog-view-more-button {
+    display: block;
+    background-color: #1a74c9; 
+    color: white;
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 16px;
+    opacity: 1;
+    width: 100%;
+}
+.card-course-catalog-view-more-button:hover {
+    background-color: #0e4d88; /* Darker blue on hover */
+}

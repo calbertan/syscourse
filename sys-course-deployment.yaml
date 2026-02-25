@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sys-course-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: sys-course
+  template:
+    metadata:
+      labels:
+        app: sys-course
+    spec:
+      containers:
+      - name: sys-course-container
+        image: 
+        ports:
+        - containerPort: 5000
+        env:
+        - name: PORT
+          value: "5000"
+        # Add the GOOGLE_APPLICATION_CREDENTIALS environment variable
+        - name: GOOGLE_APPLICATION_CREDENTIALS
+          value: "/var/secrets/key.json"
+        # Volume mount for the service account key
+        volumeMounts:
+        - name: service-account-key
+          mountPath: /var/secrets
+          readOnly: true
+          # Liveness probe
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: 5000
+          initialDelaySeconds: 10
+          periodSeconds: 25
+          timeoutSeconds: 5
+          failureThreshold: 3
+        # Readiness probe
+        readinessProbe:
+          httpGet:
+            path: /healthz
+            port: 5000
+          initialDelaySeconds: 5
+          periodSeconds: 25
+          timeoutSeconds: 5
+          successThreshold: 1
+          failureThreshold: 3
+      # Define the volume using the secret
+      volumes:
+      - name: service-account-key
+        secret:
+          secretName: firebase-adminsdk-key

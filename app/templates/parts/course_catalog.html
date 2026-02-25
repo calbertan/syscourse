@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Courses Catalog</title>
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+        crossorigin="anonymous">
+
+    <!-- Link to styles.css -->
+    <link rel="stylesheet" href="/static/course_catalog.css">
+</head>
+
+<body>
+
+    <div class="container">
+        <h1 class="title">Courses</h1><br>
+        <div class="card-course-catalog-container">
+        {% for course in courses %}
+            <div class="card-course-catalog">
+                <div class="card-course-catalog-image">
+                        <img src="https://storage.cloud.google.com/{{ bucket }}/{{ course.thumbnailUrl }}.png"
+                            onerror="this.src='https://storage.cloud.google.com/{{bucket}}/placeholder.png'">
+                </div>
+                <div class="card-course-catalog-content">
+                    <h4 class="card-course-catalog-title">{{ course.title }}</h4>
+                    <p>Field - {{ course.field }}</p>
+                    <p>Course Rating Average - {{ course.ratingsAverage }}</p>
+                </div>
+                    {% if auth_context %}
+                    <button class="card-course-catalog-view-more-button" onclick="window.location.href='/course?course_id={{course.course_id}}'">View More</button>
+                    {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+
+    <!-- Bootstrap JS (Optional, if needed) -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

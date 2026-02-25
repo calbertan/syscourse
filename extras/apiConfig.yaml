@@ -1,0 +1,262 @@
+swagger: '2.0'
+info:
+  title: api-gateway
+  version: 1.0.0
+basePath: /
+schemes:
+  - https
+securityDefinitions:
+  jwt:
+    authorizationUrl: ""
+    flow: "implicit"
+    type: "oauth2"
+    x-google-issuer: "api-gateway@temp-416704.iam.gserviceaccount.com"
+    x-google-audiences: "<GATEWAY_URL>"
+    x-google-jwks_uri: "https://www.googleapis.com/robot/v1/metadata/x509/api-gateway@temp-416704.iam.gserviceaccount.com"
+
+paths:
+  /courses:
+    get:
+      summary: Get all courses
+      operationId: getCourses
+      x-google-backend:
+        address: https://us-central1-<APP_ID>.cloudfunctions.net/course_helper
+        path_translation: APPEND_PATH_TO_ADDRESS
+      security:
+      - jwt: []
+      responses:
+        '200':
+          description: A list of courses
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Course'
+    post:
+      summary: Add a new course
+      operationId: addCourses
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            $ref: '#/definitions/Course'
+      x-google-backend:
+        address: https://us-central1-<APP_ID>.cloudfunctions.net/course_helper
+        path_translation: APPEND_PATH_TO_ADDRESS
+      security:
+      - jwt: []
+      responses:
+        '201':
+          description: Course added successfully
+
+  /courses/{course_id}:
+    get:
+      summary: Get a course by ID
+      operationId: getCourseById
+      parameters:
+        - in: path
+          name: course_id
+          required: true
+          type: string
+      x-google-backend:
+        address: https://us-central1-<APP_ID>.cloudfunctions.net/course_helper
+        path_translation: APPEND_PATH_TO_ADDRESS
+      security:
+      - jwt: []
+      responses:
+        '200':
+          description: A course object
+          schema:
+            $ref: '#/definitions/Course'
+        '404':
+          description: Course not found
+
+  /courses/{course_id}/{uid}:
+    delete:
+      summary: Delete a course by ID and UID
+      operationId: deleteCourseByIdAndUid
+      parameters:
+        - in: path
+          name: course_id
+          required: true
+          type: string
+        - in: path
+          name: uid
+          required: true
+          type: string
+      x-google-backend:
+        address: https://us-central1-<APP_ID>.cloudfunctions.net/flask_app
+        path_translation: APPEND_PATH_TO_ADDRESS
+      security:
+      - jwt: []
+      responses:
+        '200':
+          description: Course deleted successfully
+        '401':
+          description: Unauthorized
+        '404':
+          description: Course not found
+  
+  /resources:
+    get:
+      summary: Get all resources
+      operationId: getResources
+      x-google-backend:
+        address: https://us-central1-<APP_ID>.cloudfunctions.net/flask_app
+        path_translation: APPEND_PATH_TO_ADDRESS
+      security:
+      - jwt: []
+      responses:
+        '200':
+          description: A list of resources
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Resource'
+    post:
+      summary: Add a new resource
+      operationId: addResources
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            $ref: '#/definitions/Resource'
+      x-google-backend:
+        address: https://us-central1-<APP_ID>.cloudfunctions.net/flask_app
+        path_translation: APPEND_PATH_TO_ADDRESS
+      security:
+      - jwt: []
+      responses:
+        '201':
+          description: Resource added successfully
+  
+  /resources/{resource_id}:
+    get:
+      summary: Get a resource by ID
+      operationId: getResourceById
+      parameters:
+        - in: path
+          name: resource_id
+          required: true
+          type: string
+      x-google-backend:
+        address: https://us-central1-<APP_ID>.cloudfunctions.net/flask_app
+        path_translation: APPEND_PATH_TO_ADDRESS
+      security:
+      - jwt: []
+      responses:
+        '200':
+          description: A resource object
+          schema:
+            $ref: '#/definitions/Resource'
+        '404':
+          description: Resource not found
+    delete:
+      summary: Delete a resource by ID
+      operationId: deleteResourceById
+      parameters:
+        - in: path
+          name: resource_id
+          required: true
+          type: string
+      x-google-backend:
+        address: https://us-central1-<APP_ID>.cloudfunctions.net/flask_app
+        path_translation: APPEND_PATH_TO_ADDRESS
+      security:
+      - jwt: []
+      responses:
+        '200':
+          description: Resource deleted successfully
+        '404':
+          description: Resource not found
+
+  /resources/course/{course_id}:
+    get:
+      summary: Get a resource list by course ID
+      operationId: getResourceListByCourseId
+      parameters:
+        - in: path
+          name: course_id
+          required: true
+          type: string
+      x-google-backend:
+        address: https://us-central1-<APP_ID>.cloudfunctions.net/flask_app
+        path_translation: APPEND_PATH_TO_ADDRESS
+      security:
+      - jwt: []
+      responses:
+        '200':
+          description: A resource List
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Resource'
+        '404':
+          description: Resource not found
+
+  /upload_image:
+    post:
+      summary: Upload an image
+      operationId: uploadImage
+      x-google-backend:
+        address: https://us-central1-<APP_ID>.cloudfunctions.net/upload_image
+        path_translation: APPEND_PATH_TO_ADDRESS
+      security:
+      - jwt: []
+      responses:
+        '200':
+          description: Resource added successfully
+
+definitions:
+  Course:
+    type: object
+    properties:
+      title:
+        type: string
+      description:
+        type: string
+      instructor:
+        type: string
+      field:
+        type: string
+      level:
+        type: string
+      language:
+        type: string
+      thumbnailUrl:
+        type: string
+      uid:
+        type: string
+      ratingsAverage:
+        type: number
+      ratingsCount:
+        type: integer
+      document_id:
+        type: string
+      course_id:
+        type: string
+
+  Resource:
+    type: object
+    properties:
+      course_id:
+        type: string
+      title:
+        type: string
+      type:
+        type: string
+      url:
+        type: string
+      description:
+        type: string
+      uid:
+        type: string
+      thumbnail:
+        type: string
+      duration: 
+        type: integer
+      document_id: 
+        type: string
+      resource_id: 
+        type: string

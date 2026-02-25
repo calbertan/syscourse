@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resource Description</title>
+  <link rel="stylesheet" href="/static/description.css">
+</head>
+<body>
+  <div class="container">
+    <article class="media">
+      <figure class="media-left">
+        <p class="image">
+          <img src="https://storage.cloud.google.com/{{bucket}}/{{ resource.thumbnail }}.png" onerror="this.src='https://storage.cloud.google.com/{{bucket}}/placeholder.png'" alt="Resource Thumbnail">
+        </p>
+      </figure>
+      <div class="media-content">
+        <div class="content">
+          <p>
+            <strong>Title:</strong> {{ resource.title }}
+            <br>
+            <strong>Description:</strong> {{ resource.description }}
+            <br>
+            <strong>Type:</strong> {{ resource.type }}
+            <br>
+            {% if resource.type == 'application/pdf' %}
+            <a href="{{ resource.url }}" download="{{ resource.title }}.pdf" class="button is-link">Download PDF</a>
+            {% elif resource.type == 'image/png' %}
+            <a href="{{ resource.url }}" download="{{ resource.title }}.png" class="button is-link">Download PNG</a>
+            {% endif %}
+          </p>
+        </div>
+      </div>
+    </article>
+  </div>
+</body>
+</html>
+
+<script>
+  function downloadWithToken(url, token, filename) {
+      fetch(url, {
+          headers: {
+              'Authorization': `Bearer ${token}`
+          }
+      })
+      .then(response => response.blob())
+      .then(blob => {
+          const url = window.URL.createObjectURL(new Blob([blob]));
+          const link = document.createElement('a');
+          link.href = url;
+          link.setAttribute('download', filename);
+          document.body.appendChild(link);
+          link.click();
+          link.parentNode.removeChild(link);
+      });
+  }
+  </script>

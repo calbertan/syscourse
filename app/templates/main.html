@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Sys Course{% endblock %}
+{% block content %}
+  <section class="hero is-primary is-bold is-medium">
+    <div class="hero-body">
+      <div class="container">
+        <h1 class="title">Courses & Resources that might interest you</h1>
+      </div>
+    </div>
+  </section>
+  <section class="section">
+    {% include "parts/course_catalog.html" %}
+  </section>
+  <section class="section">
+    {% include "parts/resource_catalog.html" %}
+  </section>
+{% endblock %}

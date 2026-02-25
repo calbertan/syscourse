@@ -1,0 +1,20 @@
+/* description.css */
+
+.container {
+    align-items: flex-start; /* Align items to the top */
+  }
+  
+  .media-left {
+    flex: 0 0 auto; /* Don't allow the image to grow or shrink */
+    margin-right: 20px; /* Add some margin to the right of the image */
+  }
+  
+  .media-left img {
+    max-width: 128px; /* Set maximum width for the image */
+    height: auto; /* Maintain aspect ratio */
+  }
+  
+  .media-content {
+    flex: 1; /* Allow the media content to grow and take up remaining space */
+  }
+  

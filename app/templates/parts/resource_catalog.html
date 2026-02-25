@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resources Catalog</title>
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+        crossorigin="anonymous">
+
+    <!-- Link to styles.css -->
+    <link rel="stylesheet" href="/static/course_catalog.css">
+</head>
+
+<body>
+
+    <div class="container">
+        <h1 class="title">Resources</h1><br>
+        <div class="card-course-catalog-container">
+        {% for resource in resources %}
+            <div class="card-course-catalog">
+                <div class="card-course-catalog-image">
+                    <img src="https://storage.cloud.google.com/{{ bucket }}/{{ resource.thumbnail }}.png" onerror="this.src='https://storage.cloud.google.com/{{bucket}}/placeholder.png'">
+                </div>
+                <div class="card-course-catalog-content">
+                    <h4 class="card-course-catalog-title">{{ resource.title }}</h4>
+                    <p>File Type - {{ resource.type }}</p>
+                    <p>Description - {{ resource.description }}</p>
+                </div>
+                    {% if auth_context %}
+                    <button class="card-course-catalog-view-more-button" onclick="window.location.href='/resource?resource_id={{resource.resource_id}}'">View More</button>
+                    {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <!--
+    <div class="container">
+        <h1 class="title">Resources</h1><br>
+    </div>
+    <div class="card-container">
+        {% for resource in resources %}
+        <div class="card">
+            <div class="card-image">
+                <figure class="image is-square">
+                    <img src="https://storage.cloud.google.com/{{ bucket }}/{{ resource.url }}.png" onerror="this.src='https://storage.cloud.google.com/{{bucket}}/                </div>
+.png'" alt="{{ resource.title }}">
+                </figure>
+            </div>
+            <div class="card-content">
+                <h1 class="title is-spaced">{{ resource.title }}</h1>
+                <p class="subtitle is-6">{{ resource.type }}</p>
+            </div>
+            <div class="card-footer">
+                {% if auth_context %}
+                <button class="hiddenButton" onclick="window.location.href='/resource?resource_id={{resource.resource_id}}'">View More</button>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>-->
+</body>
+
+
+<html>

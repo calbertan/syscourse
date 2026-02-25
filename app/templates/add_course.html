@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block title %}Sys Course: Add Course{% endblock %}
+{% block head_extension %}
+  <link rel="stylesheet" href="/static/add-course-form.css">
+{% endblock %}
+
+{% block content %}
+  <section class="hero is-medium">
+    <div class="hero-body">
+      <div class="container has-text-centered">
+        <h1 class="title">Add a New Course</h1>
+        <h2 class="subtitle">
+          Fill in the course details and submit.
+        </h2>
+      </div>
+    </div>
+  </section>
+  <div class="container">
+    <form id="add-course-form" action="/add_course" method="POST">
+      {{ form.csrf_token }}
+      <div class="field">
+        <label class="label">Title</label>
+        <div class="control">
+          {{ form.title(class="input", placeholder="Course title", required=true) }}
+        </div>
+      </div>
+      <div class="field">
+        <label class="label">Description</label>
+        <div class="control">
+          {{ form.description(class="textarea", placeholder="Course description", required=true) }}
+        </div>
+      </div>
+      <div class="field">
+        <label class="label">Instructor</label>
+        <div class="control">
+          {{ form.instructor(class="input", placeholder="Instructor's name", required=true) }}
+        </div>
+      </div>
+      <div class="field">
+        <label class="label">Field</label>
+        <div class="control">
+          {{ form.field(class="input", placeholder="Field of study", required=true) }}
+        </div>
+      </div>
+      <div class="field">
+        <label class="label">Level</label>
+        <div class="control">
+          {{ form.level(class="input", placeholder="Course level", required=true) }}
+        </div>
+      </div>
+      <div class="field">
+        <label class="label">Language</label>
+        <div class="control">
+          {{ form.language(class="input", placeholder="Language", required=true) }}
+        </div>
+      </div>
+      <div class="field">
+        <div class="control">
+          <button class="button is-link" type="submit">Add Course</button>
+        </div>
+      </div>
+    </form>
+  </div>
+{% endblock %}
