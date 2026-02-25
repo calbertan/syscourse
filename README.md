@@ -7,6 +7,29 @@ Syscourse is a content-sharing platform that allows its user to upload education
 
 The system is built in Google Cloud using a microservices architecture deployed on Kubernetes, with serverless components and API Gateway integration to ensure performance and reliability.
 
+## Tools and Architecture
+![alt text](./docs/architecture.png)
+Frontend: Python Flask
+
+Backend: Django
+
+Database: Firestore, Cloud Storage
+
+Syscourse follows a microservices architecture deployed on Kubernetes.
+
+- The Flask frontend handles user interactions and communicates with backend services through secure API endpoints.
+
+- The Django backend exposes REST APIs responsible for business logic, authentication, and resource management.
+
+- All requests pass through an API Gateway, which validates JWT tokens and routes traffic to the appropriate services.
+
+- Firestore stores structured application data, while Cloud Storage manages uploaded educational resources.
+
+- Pub/Sub enables asynchronous communication between services for event-driven workflows (e.g., processing uploads).
+
+- Infrastructure and services are deployed and managed within Google Kubernetes Engine (GKE)
+
+
 ## Goal
 ### High Performance: 
 Latency should be kept below 300ms for 95% of requests over a 28-day period.
